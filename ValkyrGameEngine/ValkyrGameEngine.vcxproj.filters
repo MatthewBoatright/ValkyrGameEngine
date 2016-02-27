@@ -36,6 +36,9 @@
     <ClCompile Include="Buffers\vertex_array.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ToyBox\cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -62,6 +65,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Buffers\index_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ToyBox\cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

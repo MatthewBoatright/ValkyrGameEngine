@@ -120,6 +120,7 @@
     <ClCompile Include="Buffers\index_buffer.cpp" />
     <ClCompile Include="Buffers\vertex_array.cpp" />
     <ClCompile Include="Buffers\vertex_buffer.cpp" />
+    <ClCompile Include="ToyBox\cube.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderers\batch_renderer.cpp" />
     <ClCompile Include="Shaders\shader.cpp" />
@@ -134,6 +135,7 @@
     <ClInclude Include="Buffers\index_buffer.h" />
     <ClInclude Include="Buffers\vertex_array.h" />
     <ClInclude Include="Buffers\vertex_buffer.h" />
+    <ClInclude Include="ToyBox\cube.h" />
     <ClInclude Include="Renderers\batch_renderer.h" />
     <ClInclude Include="Renderers\renderable.h" />
     <ClInclude Include="Shaders\shader.h" />
