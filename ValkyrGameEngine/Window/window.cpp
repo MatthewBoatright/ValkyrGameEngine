@@ -68,9 +68,8 @@ namespace Valkyr { namespace Graphics {
 		// Set callbacks.
 		setWindowCallbacks();
 
-
 		// Set V-Sync
-		glfwSwapInterval(0.0);
+		//glfwSwapInterval(0.0);
 
 		glewExperimental = GL_TRUE;
 		GLenum err = glewInit();
@@ -88,6 +87,9 @@ namespace Valkyr { namespace Graphics {
 		// Set input mode.
 		glfwSetInputMode(m_Window, GLFW_STICKY_KEYS, GL_TRUE);
 
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LESS);
+		glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
 		return true;
 	}
