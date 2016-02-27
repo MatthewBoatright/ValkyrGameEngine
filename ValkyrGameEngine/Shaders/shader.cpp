@@ -4,7 +4,16 @@ namespace Valkyr { namespace Graphics {
 
 	Shader::Shader(const char * vertex_file_path, const char * fragment_file_path)
 	{
-		// TODO: Remove all of this code away from the constructor
+		loadShader(vertex_file_path, fragment_file_path);
+	}
+
+	Shader::~Shader()
+	{
+		glDeleteProgram(m_ProgramID);
+	}
+
+	void Shader::loadShader(const char * vertex_file_path, const char * fragment_file_path)
+	{
 		// STEPS
 		// 1) Create the shader objects
 		GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
@@ -28,7 +37,7 @@ namespace Valkyr { namespace Graphics {
 
 		// 3) Read the fragment code
 		std::string FragmentShaderCode;
-		std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);		
+		std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
 		if (FragmentShaderStream.is_open())
 		{
 			std::string Line = "";
@@ -101,9 +110,49 @@ namespace Valkyr { namespace Graphics {
 		glDeleteShader(FragmentShaderID);
 	}
 
-	Shader::~Shader()
+	GLint Shader::getUniformLocation(const GLchar* name)
 	{
-		glDeleteProgram(m_ProgramID);
+		return glGetUniformLocation(m_ProgramID, name);
+	}
+
+	void Shader::setUniform1i(const GLchar* name, int value)
+	{
+		glUniform1i(getUniformLocation(name), value);
+	}
+
+	void Shader::setUniform1f(const GLchar* name, float value)
+	{
+		glUniform1f(getUniformLocation(name), value);
+	}
+
+	void Shader::setUniform2f(const GLchar* name, const glm::vec2 & vector)
+	{
+		glUniform2f(getUniformLocation(name), vector.x, vector.y);
+	}
+
+	void Shader::setUniform3f(const GLchar* name, const glm::vec3 & vector)
+	{
+		glUniform3f(getUniformLocation(name), vector.x, vector.y, vector.z);
+	}
+
+	void Shader::setUniform4f(const GLchar* name, const glm::vec4 & vector)
+	{
+		glUniform4f(getUniformLocation(name), vector.x, vector.y, vector.z, vector.w);
+	}
+
+	void Shader::setUniformMat4(const GLchar* name, const glm::mat4 mvp)
+	{
+		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mvp));
+	}
+
+	void Shader::enable() const
+	{
+		glUseProgram(m_ProgramID);
+	}
+
+	void Shader::disable() const
+	{
+		glUseProgram(0);
 	}
 
 } }

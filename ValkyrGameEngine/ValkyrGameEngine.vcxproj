@@ -118,10 +118,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Math\mat4.cpp" />
-    <ClCompile Include="Math\vec2.cpp" />
-    <ClCompile Include="Math\vec3.cpp" />
-    <ClCompile Include="Math\vec4.cpp" />
     <ClCompile Include="Shaders\shader.cpp" />
     <ClCompile Include="Window\window.cpp" />
   </ItemGroup>
@@ -131,11 +127,6 @@
     <None Include="Shaders\SimpleVertexShader.shd" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Math\mat4.h" />
-    <ClInclude Include="Math\math.h" />
-    <ClInclude Include="Math\vec2.h" />
-    <ClInclude Include="Math\vec3.h" />
-    <ClInclude Include="Math\vec4.h" />
     <ClInclude Include="Shaders\shader.h" />
     <ClInclude Include="Window\window.h" />
   </ItemGroup>
@@ -147,6 +138,7 @@
     <Import Project="..\packages\glew.1.9.0.1\build\native\glew.targets" Condition="Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" />
     <Import Project="..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets" Condition="Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" />
     <Import Project="..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets" Condition="Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" />
+    <Import Project="..\packages\glm.0.9.7.1\build\native\glm.targets" Condition="Exists('..\packages\glm.0.9.7.1\build\native\glm.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -158,5 +150,6 @@
     <Error Condition="!Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.1.9.0.1\build\native\glew.targets'))" />
     <Error Condition="!Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets'))" />
     <Error Condition="!Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets'))" />
+    <Error Condition="!Exists('..\packages\glm.0.9.7.1\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.0.9.7.1\build\native\glm.targets'))" />
   </Target>
 </Project>
