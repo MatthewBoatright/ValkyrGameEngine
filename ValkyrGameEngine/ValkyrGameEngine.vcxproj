@@ -117,7 +117,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Buffers\index_buffer.cpp" />
+    <ClCompile Include="Buffers\vertex_array.cpp" />
+    <ClCompile Include="Buffers\vertex_buffer.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Renderers\batch_renderer.cpp" />
     <ClCompile Include="Shaders\shader.cpp" />
     <ClCompile Include="Window\window.cpp" />
   </ItemGroup>
@@ -127,6 +131,11 @@
     <None Include="Shaders\SimpleVertexShader.shd" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Buffers\index_buffer.h" />
+    <ClInclude Include="Buffers\vertex_array.h" />
+    <ClInclude Include="Buffers\vertex_buffer.h" />
+    <ClInclude Include="Renderers\batch_renderer.h" />
+    <ClInclude Include="Renderers\renderable.h" />
     <ClInclude Include="Shaders\shader.h" />
     <ClInclude Include="Window\window.h" />
   </ItemGroup>

@@ -7,6 +7,9 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/ext.hpp>
 #include <glm/gtx/string_cast.hpp>
+#include "Buffers/index_buffer.h"
+#include "Buffers/vertex_array.h"
+#include "Buffers/vertex_buffer.h"
 
 int main()
 {
@@ -28,7 +31,7 @@ int main()
 	//	0.0f,  1.0f, 0.0f
 	//};
 
-	static const GLfloat g_vertex_buffer_data[] = {
+	GLfloat g_vertex_buffer_data[] = {
 		- 1.0f,-1.0f,-1.0f, // triangle 1 : begin
 		- 1.0f,-1.0f, 1.0f,
 		- 1.0f, 1.0f, 1.0f, // triangle 1 : end
@@ -67,7 +70,7 @@ int main()
 		     1.0f,-1.0f, 1.0f
 		 };
 
-	static const GLfloat g_color_buffer_data[] = {
+	GLfloat g_color_buffer_data[] = {
 	   0.583f,  0.771f,  0.014f,
 	   0.609f,  0.115f,  0.436f,
 	   0.327f,  0.483f,  0.844f,
@@ -106,15 +109,15 @@ int main()
 		0.982f,  0.099f,  0.879f
 	};
 
-	GLuint vertexBuffer;
-	glGenBuffers(1, &vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
-	GLuint colorBuffer;
-	glGenBuffers(1, &colorBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(g_color_buffer_data), g_color_buffer_data, GL_STATIC_DRAW);
+
+	VertexBuffer vertexBuffer(g_vertex_buffer_data, 36 * 3, 3);
+	VertexBuffer colorBuffer(g_color_buffer_data, 36 * 3, 3);
+
+	VertexArray * vertexArray = new VertexArray();
+	vertexArray->addBuffer(&vertexBuffer, 0);
+	vertexArray->addBuffer(&colorBuffer, 1);
+	vertexArray->bind();
 
 	Shader shader("Shaders/SimpleVertexShader.shd", "Shaders/SimpleFragmentShader.shd");
 
@@ -126,18 +129,9 @@ int main()
 		window.clear();
 		window.getCursorPosition(x, y);	
 
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
 
 		glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
-		glDisableVertexAttribArray(0);
-		glDisableVertexAttribArray(1);
+
 
 		glm::mat4 Projection = glm::perspective(glm::radians(90.0f), 16.0f / 9.0f, 0.1f, 50.0f);
 		glm::mat4 View = glm::lookAt(glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
