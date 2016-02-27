@@ -12,5 +12,6 @@ The primary goal of this project is to create a 3D/2D game engine that has the p
 - GLEW
 - GLFW
 - NupenGL
+- GLM
 
 More info to follow as development begins.
