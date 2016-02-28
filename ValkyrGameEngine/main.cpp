@@ -21,17 +21,10 @@ int main()
 	float height = 540;
 	ShellWindow window("Valkyr Engine", width, height);
 
-	Cube cube(5, 3, 2);
+	Cube cube(1, 1, 1);
 
-	//VertexBuffer vertexBuffer(g_vertex_buffer_data, 36 * 3, 3);
-	//VertexBuffer colorBuffer(g_color_buffer_data, 36 * 3, 3);
-
-	//VertexArray * vertexArray = new VertexArray();
-	//vertexArray->addBuffer(&vertexBuffer, 0);
-	//vertexArray->addBuffer(&colorBuffer, 1);
-	//vertexArray->bind();
-
-	Shader shader("Shaders/SimpleVertexShader.shd", "Shaders/SimpleFragmentShader.shd");
+	//Shader shader("Shaders/SimpleVertexShader.shd", "Shaders/SimpleFragmentShader.shd");
+	Shader shader("Shaders/TextureVertexShader.shd", "Shaders/TextureFragmentShader.shd");
 
 	double x, y;
 	float rx = 0.0f;
@@ -41,14 +34,14 @@ int main()
 	while (!window.closed())
 	{
 		window.clear();
-		window.getCursorPosition(x, y);	
+		window.getCursorPosition(x, y);
 
 		glDrawArrays(GL_TRIANGLES, 0, 12 * 3);
 
 		glm::mat4 Projection = glm::perspective(glm::radians(70.0f), 16.0f / 9.0f, 0.1f, 50.0f);
-		glm::mat4 View = glm::lookAt(glm::vec3(0, 0, 8), 
-									 glm::vec3(((float)(x * (10 * 2) / window.getWidth() - 10)), ((float)(10 - y * (10 * 2) / window.getHeight())) , 0), 
-									 glm::vec3(0, 1, 0));
+		glm::mat4 View = glm::lookAt(glm::vec3(0, 0, 3),
+			glm::vec3(((float)(x * (10 * 2) / window.getWidth() - 10)), ((float)(10 - y * (10 * 2) / window.getHeight())), 0),
+			glm::vec3(0, 1, 0));
 		glm::mat4 Model = glm::mat4(1.0f);
 		Model *= glm::rotate(Model, (glm::mediump_float)rx += 0.01, glm::vec3(0, 1, 0));
 		shader.enable();

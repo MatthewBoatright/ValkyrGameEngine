@@ -39,20 +39,22 @@
     <ClCompile Include="ToyBox\cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Layers\layer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Shaders\SimpleFragmentShader.shd" />
     <None Include="Shaders\SimpleVertexShader.shd" />
+    <None Include="Shaders\TextureFragmentShader.shd" />
+    <None Include="Shaders\TextureVertexShader.shd" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Window\window.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shaders\shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderers\renderable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderers\batch_renderer.h">
@@ -68,6 +70,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ToyBox\cube.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Layers\layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderers\base_renderable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderers\base_renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utilities\bmp_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

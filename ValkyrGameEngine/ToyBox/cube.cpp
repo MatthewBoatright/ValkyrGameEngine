@@ -4,50 +4,50 @@ namespace Valkyr { namespace Graphics {
 	
 	Cube::Cube(float width, float height, float depth)
 	{
-		float w = width / 2;
-		float h = height / 2;
-		float d = depth / 2;
+		float x = width / 2;
+		float y = height / 2;
+		float z = depth / 2;
 
 		m_VertexArray = new VertexArray();
 
 		GLfloat g_vertex_buffer_data[] =
 		{
-			-w,-h,-d,
-			-w,-h, d,
-			-w, h, d,
-			 w, h,-d,
-			-w,-h,-d,
-			-w, h,-d,
-			 w,-h, d,
-			-w,-h,-d,
-			 w,-h,-d,
-			 w, h,-d,
-			 w,-h,-d,
-			-w,-h,-d,
-			-w,-h,-d,
-			-w, h, d,
-			-w, h,-d,
-			 w,-h, d,
-			-w,-h, d,
-			-w,-h,-d,
-			-w, h, d,
-			-w,-h, d,
-			 w,-h, d,
-			 w, h, d,
-			 w,-h,-d,
-			 w, h,-d,
-			 w,-h,-d,
-			 w, h, d,
-			 w,-h, d,
-			 w, h, d,
-			 w, h,-d,
-			-w, h,-d,
-			 w, h, d,
-			-w, h,-d,
-			-w, h, d,
-			 w, h, d,
-			-w, h, d,
-			 w,-h, d
+			-x,-y,-z, // A
+			-x,-y, z, // B,
+			-x, y, z, // C
+			x, y,-z, // D
+			-x,-y,-z, // A
+			-x, y,-z, // E
+			x,-y, z, // B,
+			-x,-y,-z, // A
+			x,-y,-z, // F
+			x, y,-z, // D
+			x,-y,-z, // F
+			-x,-y,-z, // A
+			-x,-y,-z, // A
+			-x, y, z, // C
+			-x, y,-z, // E
+			x,-y, z, // B,
+			-x,-y, z, // B,
+			-x,-y,-z, // A
+			-x, y, z, // C
+			-x,-y, z, // B,
+			x,-y, z, // B,
+			x, y, z, // G
+			x,-y,-z, // F
+			x, y,-z, // D
+			x,-y,-z, // F
+			x, y, z, // G
+			x,-y, z, // B,
+			x, y, z, // G
+			x, y,-z, // D
+			-x, y,-z, // E
+			x, y, z, // G
+			-x, y,-z, // E
+			-x, y, z, // C
+			x, y, z, // G
+			-x, y, z, // C
+			x,-y, z, // B
 		};
 
 		GLfloat g_color_buffer_data[] =
@@ -90,9 +90,97 @@ namespace Valkyr { namespace Graphics {
 			0.982f,  0.099f,  0.879f
 		};
 
+		GLfloat g_uv_buffer_data[] = {
+		   0.000059f, 1.0f - 0.000004f,
+		   0.000103f, 1.0f - 0.336048f,
+		   0.335973f, 1.0f - 0.335903f,
+		   1.000023f, 1.0f - 0.000013f,
+		   0.667979f, 1.0f - 0.335851f,
+		   0.999958f, 1.0f - 0.336064f,
+		   0.667979f, 1.0f - 0.335851f,
+		    0.336024f, 1.0f - 0.671877f,
+		    0.667969f, 1.0f - 0.671889f,
+		    1.000023f, 1.0f - 0.000013f,
+		    0.668104f, 1.0f - 0.000013f,
+		    0.667979f, 1.0f - 0.335851f,
+		    0.000059f, 1.0f - 0.000004f,
+		    0.335973f, 1.0f - 0.335903f,
+		    0.336098f, 1.0f - 0.000071f,
+		    0.667979f, 1.0f - 0.335851f,
+		    0.335973f, 1.0f - 0.335903f,
+		    0.336024f, 1.0f - 0.671877f,
+		    1.000004f, 1.0f - 0.671847f,
+		    0.999958f, 1.0f - 0.336064f,
+		    0.667979f, 1.0f - 0.335851f,
+		    0.668104f, 1.0f - 0.000013f,
+		    0.335973f, 1.0f - 0.335903f,
+		    0.667979f, 1.0f - 0.335851f,
+		    0.335973f, 1.0f - 0.335903f,
+		    0.668104f, 1.0f - 0.000013f,
+		    0.336098f, 1.0f - 0.000071f,
+		    0.000103f, 1.0f - 0.336048f,
+		    0.000004f, 1.0f - 0.671870f,
+		    0.336024f, 1.0f - 0.671877f,
+		    0.000103f, 1.0f - 0.336048f,
+		    0.336024f, 1.0f - 0.671877f,
+		    0.335973f, 1.0f - 0.335903f,
+		    0.667969f, 1.0f - 0.671889f,
+		    1.000004f, 1.0f - 0.671847f,
+		    0.667979f, 1.0f - 0.335851f
+		};
+
+		GLuint Texture = BMPLoader::loadBMP_custom("../lena_gray.bmp");
+
 		m_VertexArray->addBuffer(new VertexBuffer(g_vertex_buffer_data, 36 * 3, 3), 0);
-		m_VertexArray->addBuffer(new VertexBuffer(g_color_buffer_data, 36 * 3, 3), 1);
+		m_VertexArray->addBuffer(new VertexBuffer(g_uv_buffer_data, 36 * 2, 2), 1);
+		//m_VertexArray->addBuffer(new VertexBuffer(g_color_buffer_data, 36 * 3, 3), 1);
+
+
+
+		// Remove this later
 		m_VertexArray->bind();
+	}
+
+	Cube::Cube(glm::vec3 dimensions, glm::vec4 color)
+	{
+		float x = dimensions.x / 2;
+		float y = dimensions.y / 2;
+		float z = dimensions.z / 2;
+
+		float r = color.x;
+		float g = color.y;
+		float b = color.z;
+		float a = color.w;
+
+		m_VertexArray = new VertexArray();
+
+		GLfloat g_vertex_buffer_data[] =
+		{
+			-x,-y,-z, // 0
+			-x,-y, z, // 1
+			-x, y, z, // 2
+			x, y,-z, // 3
+			-x, y,-z, // 4
+			x,-y,-z, // 5
+			x, y, z  // 6
+		};
+
+		GLfloat g_color_buffer_data[] =
+		{
+			r, g, b, a,
+			r, g, b, a,
+			r, g, b, a,
+			r, g, b, a,
+			r, g, b, a,
+			r, g, b, a,
+			r, g, b, a
+		};
+
+		m_VertexArray->addBuffer(new VertexBuffer(g_vertex_buffer_data, 7 * 3, 3), 0);
+		m_VertexArray->addBuffer(new VertexBuffer(g_color_buffer_data, 7 * 3, 3), 1);
+
+		GLuint indices[]{ 0, 1, 2, 3, 0, 4, 1, 0, 5, 3, 5, 0, 0, 2, 4, 1, 1, 0, 2, 1, 1, 6, 5, 3, 5, 6, 1, 6, 3, 4, 6, 4, 2, 6, 2, 1 };
+		m_IndexBuffer = new IndexBuffer(indices, 36);
 	}
 
 } }
