@@ -5,9 +5,9 @@ namespace Valkyr { namespace Graphics {
 	IndexBuffer::IndexBuffer(GLuint * data, GLsizei count)
 	{
 		glGenBuffers(1, &m_IndexBufferID);
-		bind();
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferID);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLuint), data, GL_STATIC_DRAW);
-		unbind();
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 	
 	IndexBuffer::~IndexBuffer()

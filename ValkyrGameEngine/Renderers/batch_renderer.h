@@ -1,11 +1,10 @@
 #pragma once
 
-#include "base_renderer.h"
-#include "../Buffers/index_buffer.h"
+#include "irenderer.h"
 
 namespace Valkyr { namespace Graphics { 
 
-	class BatchRenderer : public BaseRenderer
+	class BatchRenderer : public IRenderer
 	{
 	public:
 		BatchRenderer();
@@ -13,16 +12,12 @@ namespace Valkyr { namespace Graphics {
 
 		void begin() override;
 		void end() override;
-		void submit(const BaseRenderable * renderable) override;
+		void submit(const IRenderable * renderable) override;
+		void flush() override;
 
-	protected:
 	private:
 		GLuint m_VAO;
 		GLuint m_VBO;
-		IndexBuffer * m_IndexBuffer;
-		GLsizei m_IndexCount;
-
-		void init();
 
 	};
 

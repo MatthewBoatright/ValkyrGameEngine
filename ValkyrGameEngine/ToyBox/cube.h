@@ -17,7 +17,7 @@ namespace Valkyr { namespace Graphics {
 		GLuint m_ComponentCount;
 
 		Cube(float width, float height, float depth);
-		Cube(glm::vec3 dimensions, glm::vec4 color);
+		Cube(glm::vec3 dimensions, glm::vec3 position, glm::vec4 color);
 
 	protected:
 	private:

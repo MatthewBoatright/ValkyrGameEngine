@@ -22,15 +22,14 @@ namespace Valkyr { namespace Graphics {
 
 	}
 
-	void BatchRenderer::submit(const BaseRenderable * renderable)
+	void BatchRenderer::submit(const IRenderable * renderable)
 	{
 
 	}
 
-	void BatchRenderer::init()
+	void BatchRenderer::flush()
 	{
 
 	}
 
-}
-}
+}}

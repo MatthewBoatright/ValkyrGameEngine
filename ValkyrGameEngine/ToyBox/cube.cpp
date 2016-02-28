@@ -132,20 +132,21 @@ namespace Valkyr { namespace Graphics {
 		GLuint Texture = BMPLoader::loadBMP_custom("../lena_gray.bmp");
 
 		m_VertexArray->addBuffer(new VertexBuffer(g_vertex_buffer_data, 36 * 3, 3), 0);
-		m_VertexArray->addBuffer(new VertexBuffer(g_uv_buffer_data, 36 * 2, 2), 1);
-		//m_VertexArray->addBuffer(new VertexBuffer(g_color_buffer_data, 36 * 3, 3), 1);
+		//m_VertexArray->addBuffer(new VertexBuffer(g_uv_buffer_data, 36 * 2, 2), 1);
+		m_VertexArray->addBuffer(new VertexBuffer(g_color_buffer_data, 36 * 3, 3), 1);
 
-
-
-		// Remove this later
 		m_VertexArray->bind();
 	}
 
-	Cube::Cube(glm::vec3 dimensions, glm::vec4 color)
+	Cube::Cube(glm::vec3 dimensions, glm::vec3 position, glm::vec4 color)
 	{
-		float x = dimensions.x / 2;
-		float y = dimensions.y / 2;
-		float z = dimensions.z / 2;
+		float x = position.x;
+		float y = position.y;
+		float z = position.z;
+
+		float w = dimensions.x;
+		float h = dimensions.y;
+		float d = dimensions.z;
 
 		float r = color.x;
 		float g = color.y;
@@ -156,31 +157,40 @@ namespace Valkyr { namespace Graphics {
 
 		GLfloat g_vertex_buffer_data[] =
 		{
-			-x,-y,-z, // 0
-			-x,-y, z, // 1
-			-x, y, z, // 2
-			x, y,-z, // 3
-			-x, y,-z, // 4
-			x,-y,-z, // 5
-			x, y, z  // 6
+			x    , y    , z    , // 0
+			x + w, y    , z    , // 1
+			x    , y + h, z    , // 2
+			x    , y    , z + d, // 3
+			x + w, y + h, z    , // 4
+			x + w, y    , z + d, // 5
+			x    , y + h, z + d, // 6
+			x + w, y + h, z + d	 // 7
 		};
 
 		GLfloat g_color_buffer_data[] =
 		{
-			r, g, b, a,
-			r, g, b, a,
-			r, g, b, a,
-			r, g, b, a,
-			r, g, b, a,
-			r, g, b, a,
-			r, g, b, a
+			0.583f,  0.771f,  0.014f,
+			0.609f,  0.115f,  0.436f,
+			0.327f,  0.483f,  0.844f,
+			0.822f,  0.569f,  0.201f,
+			0.435f,  0.602f,  0.223f,
+			0.310f,  0.747f,  0.185f,
+			0.597f,  0.770f,  0.761f,
+			0.559f,  0.436f,  0.730f
 		};
 
-		m_VertexArray->addBuffer(new VertexBuffer(g_vertex_buffer_data, 7 * 3, 3), 0);
-		m_VertexArray->addBuffer(new VertexBuffer(g_color_buffer_data, 7 * 3, 3), 1);
+		m_VertexArray->addBuffer(new VertexBuffer(g_vertex_buffer_data, 8 * 3, 3), 0);
+		m_VertexArray->addBuffer(new VertexBuffer(g_color_buffer_data, 8 * 3, 3), 1);
 
-		GLuint indices[]{ 0, 1, 2, 3, 0, 4, 1, 0, 5, 3, 5, 0, 0, 2, 4, 1, 1, 0, 2, 1, 1, 6, 5, 3, 5, 6, 1, 6, 3, 4, 6, 4, 2, 6, 2, 1 };
-		m_IndexBuffer = new IndexBuffer(indices, 36);
+		//GLuint indices[]{ 0, 1, 2, 2, 1, 4, 4, 7, 2, 2, 7, 6, 6, 7, 3, 3, 7, 5, 5, 1, 3, 3, 1, 0, 0, 3, 2, 2, 3, 6, 1, 5, 4, 4, 5, 7 };
+		GLuint indices[]{ 0, 1, 4, 4, 2, 0, 1, 5, 7, 7, 4, 1, 5, 3, 6, 6, 7, 5, 3, 0, 2, 2, 6, 3, 2, 4, 7, 7, 6, 2, 0, 1, 5, 5, 3, 0 };
+
+		GLuint elementBuffer;
+		glGenBuffers(1, &elementBuffer);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 36 * sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
+		
+		m_VertexArray->bind();
 	}
 
 } }

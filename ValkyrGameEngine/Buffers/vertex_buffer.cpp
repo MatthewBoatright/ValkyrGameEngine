@@ -6,9 +6,9 @@ namespace Valkyr { namespace Graphics {
 		: m_ComponentCount(componentCount)
 	{
 		glGenBuffers(1, &m_VertexBufferID);
-		bind();
+		glBindBuffer(GL_ARRAY_BUFFER, m_VertexBufferID);
 		glBufferData(GL_ARRAY_BUFFER, count * sizeof(GLfloat), data, GL_STATIC_DRAW);
-		unbind();
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
 	VertexBuffer::~VertexBuffer()

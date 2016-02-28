@@ -121,12 +121,15 @@
     <ClCompile Include="Buffers\index_buffer.cpp" />
     <ClCompile Include="Buffers\vertex_array.cpp" />
     <ClCompile Include="Buffers\vertex_buffer.cpp" />
-    <ClCompile Include="Layers\layer.cpp" />
-    <ClCompile Include="ToyBox\cube.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Common\controls.cpp" />
+    <ClCompile Include="Common\objloader.cpp" />
+    <ClCompile Include="Common\textureloader.cpp" />
+    <ClCompile Include="Common\vboindexer.cpp" />
     <ClCompile Include="Renderers\batch_renderer.cpp" />
+    <ClCompile Include="launcher.cpp" />
+    <ClCompile Include="ToyBox\cube.cpp" />
     <ClCompile Include="Shaders\shader.cpp" />
-    <ClCompile Include="Window\window.cpp" />
+    <ClCompile Include="Common\window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -139,14 +142,17 @@
     <ClInclude Include="Buffers\index_buffer.h" />
     <ClInclude Include="Buffers\vertex_array.h" />
     <ClInclude Include="Buffers\vertex_buffer.h" />
-    <ClInclude Include="Layers\layer.h" />
-    <ClInclude Include="Renderers\base_renderer.h" />
-    <ClInclude Include="ToyBox\cube.h" />
+    <ClInclude Include="Common\controls.hpp" />
+    <ClInclude Include="Common\objloader.hpp" />
+    <ClInclude Include="Common\textureloader.hpp" />
+    <ClInclude Include="Common\vboindexer.hpp" />
     <ClInclude Include="Renderers\batch_renderer.h" />
-    <ClInclude Include="Renderers\base_renderable.h" />
+    <ClInclude Include="Renderers\irenderable.h" />
+    <ClInclude Include="Renderers\irenderer.h" />
+    <ClInclude Include="ToyBox\cube.h" />
     <ClInclude Include="Shaders\shader.h" />
     <ClInclude Include="Utilities\bmp_loader.h" />
-    <ClInclude Include="Window\window.h" />
+    <ClInclude Include="Common\window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
