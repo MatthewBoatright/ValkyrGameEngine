@@ -20,6 +20,7 @@ using namespace glm;
 #include "Common/vboindexer.hpp"
 #include "Common/textureloader.hpp"
 #include "Shaders/shader.h"
+
 using namespace Valkyr;
 using namespace Graphics;
 
@@ -28,9 +29,6 @@ int main(void)
 	// Main Window
 	ShellWindow mainWindow("Valkyr Engine", 1024, 768);
 
-#if 0
-	Cube cube(2, 3, 4);
-#else
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
@@ -44,7 +42,8 @@ int main(void)
 	GLuint ModelMatrixID = glGetUniformLocation(shader.m_ProgramID, "M");
 
 	// Load the texture
-	GLuint Texture = loadDDS("uvmap.DDS");
+	//GLuint Texture = loadDDS("uvmap.DDS");
+	GLuint Texture = loadDDS("uvmap.dds");
 
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureID = glGetUniformLocation(shader.m_ProgramID, "myTextureSampler");
@@ -53,7 +52,7 @@ int main(void)
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
-	bool res = loadOBJ("suzanne.obj", vertices, uvs, normals);
+	bool res = loadOBJ("Potato2.obj", vertices, uvs, normals);
 
 	std::vector<unsigned short> indices;
 	std::vector<glm::vec3> indexed_vertices;
@@ -61,7 +60,10 @@ int main(void)
 	std::vector<glm::vec3> indexed_normals;
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
 
+	//glm::vec3 * d = &indexed_vertices[0];
+
 	// Load it into a VBO
+	//VertexBuffer indexVertices(&indexed_vertices[0], indexed_vertices.size() * sizeof(glm::vec3));
 
 	GLuint vertexbuffer;
 	glGenBuffers(1, &vertexbuffer);
@@ -87,7 +89,6 @@ int main(void)
 	// Get a handle for our "LightPosition" uniform
 	shader.enable();
 	GLuint LightID = glGetUniformLocation(shader.m_ProgramID, "LightPosition_worldspace");
-#endif
 
 	while (!mainWindow.closed())
 	{

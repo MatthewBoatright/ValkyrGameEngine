@@ -2,12 +2,15 @@
 
 #include <GL/glew.h>
 
+#include <glm/glm.hpp>
+
 namespace Valkyr { namespace Graphics { 
 
 	class VertexBuffer
 	{
 	public:
-		VertexBuffer(GLfloat* data, GLsizei count, GLuint componentCount);
+		VertexBuffer(GLfloat * data, GLsizei count, GLuint componentCount);
+		VertexBuffer(GLvoid * data, GLsizei count, GLuint componentCount);
 		~VertexBuffer();
 
 		void bind() const;
