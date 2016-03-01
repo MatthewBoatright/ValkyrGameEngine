@@ -51,6 +51,12 @@
     <ClCompile Include="Common\textureloader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ToyBox\simple_renderable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Shaders\texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -100,6 +106,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Common\textureloader.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ToyBox\simple_renderable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shaders\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

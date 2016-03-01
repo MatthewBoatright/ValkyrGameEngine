@@ -130,9 +130,11 @@
     <ClCompile Include="Common\vboindexer.cpp" />
     <ClCompile Include="Renderers\batch_renderer.cpp" />
     <ClCompile Include="launcher.cpp" />
+    <ClCompile Include="Shaders\texture.cpp" />
     <ClCompile Include="ToyBox\cube.cpp" />
     <ClCompile Include="Shaders\shader.cpp" />
     <ClCompile Include="Common\window.cpp" />
+    <ClCompile Include="ToyBox\simple_renderable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -152,8 +154,10 @@
     <ClInclude Include="Renderers\batch_renderer.h" />
     <ClInclude Include="Renderers\irenderable.h" />
     <ClInclude Include="Renderers\irenderer.h" />
+    <ClInclude Include="Shaders\texture.h" />
     <ClInclude Include="ToyBox\cube.h" />
     <ClInclude Include="Shaders\shader.h" />
+    <ClInclude Include="ToyBox\simple_renderable.h" />
     <ClInclude Include="Utilities\bmp_loader.h" />
     <ClInclude Include="Common\window.h" />
   </ItemGroup>

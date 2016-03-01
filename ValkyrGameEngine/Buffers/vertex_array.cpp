@@ -25,12 +25,12 @@ namespace Valkyr { namespace Graphics {
 		glBindVertexArray(0);
 	}
 
-	void VertexArray::addBuffer(VertexBuffer * buffer, GLuint index)
+	void VertexArray::addBuffer(VertexBuffer * buffer, GLuint attributeIndex)
 	{
 		bind();
 		buffer->bind();
-		glEnableVertexAttribArray(index);
-		glVertexAttribPointer(index, buffer->getComponentCount(), GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glEnableVertexAttribArray(attributeIndex);
+		glVertexAttribPointer(attributeIndex, buffer->getBufferSize(), GL_FLOAT, GL_FALSE, 0, (void*)0);
 		buffer->unbind();
 		unbind();
 	}

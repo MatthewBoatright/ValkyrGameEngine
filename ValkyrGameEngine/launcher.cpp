@@ -20,9 +20,27 @@ using namespace glm;
 #include "Common/vboindexer.hpp"
 #include "Common/textureloader.hpp"
 #include "Shaders/shader.h"
+#include "Shaders/texture.h"
+#include "Buffers/vertex_buffer.h"
+#include "Buffers/index_buffer.h"
+#include "Buffers/vertex_array.h"
 
 using namespace Valkyr;
 using namespace Graphics;
+
+void loadVertexBuffer(const std::vector<glm::vec2> indexed_vertices, GLuint & buffer_id)
+{
+	glGenBuffers(1, &buffer_id);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+	glBufferData(GL_ARRAY_BUFFER, indexed_vertices.size() * sizeof(glm::vec2), &indexed_vertices[0], GL_STATIC_DRAW);
+}
+
+void loadVertexBuffer(const std::vector<glm::vec3> indexed_vertices, GLuint & buffer_id)
+{
+	glGenBuffers(1, &buffer_id);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer_id);
+	glBufferData(GL_ARRAY_BUFFER, indexed_vertices.size() * sizeof(glm::vec3), &indexed_vertices[0], GL_STATIC_DRAW);
+}
 
 int main(void)
 {
@@ -43,7 +61,8 @@ int main(void)
 
 	// Load the texture
 	//GLuint Texture = loadDDS("uvmap.DDS");
-	GLuint Texture = loadDDS("uvmap.dds");
+	//GLuint Texture = loadBMP_custom("uvmap.dds");
+	Texture tex("uvmap.dds");
 
 	// Get a handle for our "myTextureSampler" uniform
 	GLuint TextureID = glGetUniformLocation(shader.m_ProgramID, "myTextureSampler");
@@ -52,7 +71,7 @@ int main(void)
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec2> uvs;
 	std::vector<glm::vec3> normals;
-	bool res = loadOBJ("Potato2.obj", vertices, uvs, normals);
+	bool res = loadOBJ("suzanne.obj", vertices, uvs, normals);
 
 	std::vector<unsigned short> indices;
 	std::vector<glm::vec3> indexed_vertices;
@@ -60,31 +79,15 @@ int main(void)
 	std::vector<glm::vec3> indexed_normals;
 	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
 
-	//glm::vec3 * d = &indexed_vertices[0];
+	VertexBuffer vertexBuffer(indexed_vertices);
+	VertexBuffer uvBuffer(indexed_uvs);
+	VertexBuffer normalBuffer(indexed_normals);
+	IndexBuffer elementBuffer(indices);
 
-	// Load it into a VBO
-	//VertexBuffer indexVertices(&indexed_vertices[0], indexed_vertices.size() * sizeof(glm::vec3));
-
-	GLuint vertexbuffer;
-	glGenBuffers(1, &vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, indexed_vertices.size() * sizeof(glm::vec3), &indexed_vertices[0], GL_STATIC_DRAW);
-
-	GLuint uvbuffer;
-	glGenBuffers(1, &uvbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-	glBufferData(GL_ARRAY_BUFFER, indexed_uvs.size() * sizeof(glm::vec2), &indexed_uvs[0], GL_STATIC_DRAW);
-
-	GLuint normalbuffer;
-	glGenBuffers(1, &normalbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
-	glBufferData(GL_ARRAY_BUFFER, indexed_normals.size() * sizeof(glm::vec3), &indexed_normals[0], GL_STATIC_DRAW);
-
-	// Generate a buffer for the indices as well
-	GLuint elementbuffer;
-	glGenBuffers(1, &elementbuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned short), &indices[0], GL_STATIC_DRAW);
+	VertexArray vertexArray;
+	vertexArray.addBuffer(&vertexBuffer, 0);
+	vertexArray.addBuffer(&uvBuffer, 1);
+	vertexArray.addBuffer(&normalBuffer, 2);
 
 	// Get a handle for our "LightPosition" uniform
 	shader.enable();
@@ -111,49 +114,12 @@ int main(void)
 
 		// Bind our texture in Texture Unit 0
 		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, Texture);
+		tex.bind();
 		// Set our "myTextureSampler" sampler to user Texture Unit 0
 		glUniform1i(TextureID, 0);
 
-		// 1rst attribute buffer : vertices
-		glEnableVertexAttribArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-		glVertexAttribPointer(
-			0,                  // attribute
-			3,                  // size
-			GL_FLOAT,           // type
-			GL_FALSE,           // normalized?
-			0,                  // stride
-			(void*)0            // array buffer offset
-			);
-
-		// 2nd attribute buffer : UVs
-		glEnableVertexAttribArray(1);
-		glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-		glVertexAttribPointer(
-			1,                                // attribute
-			2,                                // size
-			GL_FLOAT,                         // type
-			GL_FALSE,                         // normalized?
-			0,                                // stride
-			(void*)0                          // array buffer offset
-			);
-
-		// 3rd attribute buffer : normals
-		glEnableVertexAttribArray(2);
-		glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
-		glVertexAttribPointer(
-			2,                                // attribute
-			3,                                // size
-			GL_FLOAT,                         // type
-			GL_FALSE,                         // normalized?
-			0,                                // stride
-			(void*)0                          // array buffer offset
-			);
-
-		// Index buffer
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
-
+		vertexArray.bind();
+		elementBuffer.bind();
 		// Draw the triangles !
 		glDrawElements(
 			GL_TRIANGLES,      // mode
@@ -161,6 +127,8 @@ int main(void)
 			GL_UNSIGNED_SHORT,   // type
 			(void*)0           // element array buffer offset
 			);
+		elementBuffer.unbind();
+		vertexArray.unbind();
 
 		glDisableVertexAttribArray(0);
 		glDisableVertexAttribArray(1);

@@ -14,7 +14,7 @@ namespace Valkyr { namespace Graphics {
 
 		void bind() const;
 		void unbind() const;
-		void addBuffer(VertexBuffer * buffer, GLuint index);
+		void addBuffer(VertexBuffer * buffer, GLuint attributeIndex);
 
 	protected:
 	private:
