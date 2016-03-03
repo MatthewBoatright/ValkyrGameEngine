@@ -48,22 +48,22 @@
     <ClCompile Include="Common\objloader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Common\textureloader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ToyBox\simple_renderable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Shaders\texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Models\obj_model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Shaders\SimpleFragmentShader.shd" />
-    <None Include="Shaders\SimpleVertexShader.shd" />
     <None Include="Shaders\TextureFragmentShader.shd" />
     <None Include="Shaders\TextureVertexShader.shd" />
+    <None Include="Shaders\SimpleVertexShader.shd" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shaders\shader.h">
@@ -105,13 +105,13 @@
     <ClInclude Include="Common\objloader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Common\textureloader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ToyBox\simple_renderable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Shaders\texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Models\obj_model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

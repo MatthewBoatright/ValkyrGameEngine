@@ -126,8 +126,8 @@
     <ClCompile Include="Buffers\vertex_buffer.cpp" />
     <ClCompile Include="Common\controls.cpp" />
     <ClCompile Include="Common\objloader.cpp" />
-    <ClCompile Include="Common\textureloader.cpp" />
     <ClCompile Include="Common\vboindexer.cpp" />
+    <ClCompile Include="Models\obj_model.cpp" />
     <ClCompile Include="Renderers\batch_renderer.cpp" />
     <ClCompile Include="launcher.cpp" />
     <ClCompile Include="Shaders\texture.cpp" />
@@ -149,8 +149,8 @@
     <ClInclude Include="Buffers\vertex_buffer.h" />
     <ClInclude Include="Common\controls.hpp" />
     <ClInclude Include="Common\objloader.hpp" />
-    <ClInclude Include="Common\textureloader.hpp" />
     <ClInclude Include="Common\vboindexer.hpp" />
+    <ClInclude Include="Models\obj_model.h" />
     <ClInclude Include="Renderers\batch_renderer.h" />
     <ClInclude Include="Renderers\irenderable.h" />
     <ClInclude Include="Renderers\irenderer.h" />
