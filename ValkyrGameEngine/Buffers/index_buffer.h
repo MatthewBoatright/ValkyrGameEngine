@@ -17,10 +17,12 @@ namespace Valkyr { namespace Graphics {
 
 		void bind() const;
 		void unbind() const;
+		inline const GLsizei getSize() const { return m_Size; }
 
 	protected:
 	private:
 		GLuint m_IndexBufferID;
+		GLsizei m_Size;
 
 	};
 

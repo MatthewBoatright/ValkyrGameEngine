@@ -12,12 +12,12 @@ namespace Valkyr { namespace Graphics {
 	public:
 		inline const VertexArray * getVertexArray() const { return m_VertexArray; }
 		inline const IndexBuffer * getIndexBuffer() const { return m_IndexBuffer; }
-		inline Shader & getShader() const { return m_Shader; }
+		IRenderable() {}
 
 	protected:
 		VertexArray * m_VertexArray;
 		IndexBuffer * m_IndexBuffer;
-		Shader & m_Shader;
+
 
 	};
 

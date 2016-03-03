@@ -17,7 +17,7 @@ namespace Valkyr { namespace Graphics {
 
 	void Texture::unbind()
 	{
-
+		glDisable(m_TextureID);
 	}
 
 	bool Texture::init(const char * texturePath)

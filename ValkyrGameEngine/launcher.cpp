@@ -41,32 +41,14 @@ int main(void)
 
 	Texture tex("uvmap.dds");
 
-	GLuint TextureID = glGetUniformLocation(shader.m_ProgramID, "myTextureSampler");
-
-	std::vector<glm::vec3> vertices;
-	std::vector<glm::vec2> uvs;
-	std::vector<glm::vec3> normals;
-	bool res = loadOBJ("epidote.obj", vertices, uvs, normals);
-
-	std::vector<unsigned short> indices;
-	std::vector<glm::vec3> indexed_vertices;
-	std::vector<glm::vec2> indexed_uvs;
-	std::vector<glm::vec3> indexed_normals;
-	indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
-
-	VertexBuffer vertexBuffer(indexed_vertices);
-	VertexBuffer uvBuffer(indexed_uvs);
-	VertexBuffer normalBuffer(indexed_normals);
-	IndexBuffer elementBuffer(indices);
-
-	VertexArray vertexArray;
-	vertexArray.addBuffer(&vertexBuffer, 0);
-	vertexArray.addBuffer(&uvBuffer, 1);
-	vertexArray.addBuffer(&normalBuffer, 2);
+	OBJModel Epidote("epidote.obj");
+	OBJModel Potato("potato2.obj");
 
 	shader.enable();
 	GLuint LightID = glGetUniformLocation(shader.m_ProgramID, "LightPosition_worldspace");
 
+	int transX = 0;
+	int transY = 0;
 	while (!mainWindow.closed())
 	{
 		mainWindow.clear();
@@ -74,7 +56,8 @@ int main(void)
 
 		glm::mat4 ProjectionMatrix = getProjectionMatrix();
 		glm::mat4 ViewMatrix = getViewMatrix();
-		glm::mat4 ModelMatrix = glm::mat4(1.0);
+		glm::mat4 TranslationMatrix = translate(mat4(), glm::vec3(transX++, 0, 0));
+		glm::mat4 ModelMatrix = TranslationMatrix;
 		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
@@ -84,18 +67,30 @@ int main(void)
 		glm::vec3 lightPos = glm::vec3(4, 4, 4);
 		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 
-		glActiveTexture(GL_TEXTURE0);
-		tex.bind();
-		glUniform1i(TextureID, 0);
+		Epidote.bind();
+		glDrawElements(GL_TRIANGLES, Epidote.getIndexBuffer()->getSize(), GL_UNSIGNED_SHORT, (void*)0);
+		Epidote.unbind();
 
-		vertexArray.bind();
-		elementBuffer.bind();
-		glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, (void*)0);
-		elementBuffer.unbind();
-		vertexArray.unbind();
+		ProjectionMatrix = getProjectionMatrix();
+		ViewMatrix = getViewMatrix();
+		ModelMatrix = glm::toMat4(glm::normalize(glm::quat(glm::vec3(0, transY++, 0))));
+		MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
+		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+
+		Potato.bind();
+		glDrawElements(GL_TRIANGLES, Potato.getIndexBuffer()->getSize(), GL_UNSIGNED_SHORT, (void*)0);
+		Potato.unbind();
 
 		mainWindow.update();
 		mainWindow.calculateFPS();
+
+		if (transX > 50)
+			transX = -50;
+		if (transY > 360)
+			transY = 0;
 	}
 
 	return 0;
