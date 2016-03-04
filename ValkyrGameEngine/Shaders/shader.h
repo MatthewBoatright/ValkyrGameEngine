@@ -23,6 +23,8 @@ namespace Valkyr { namespace Graphics {
 		Shader(const char * vertex_file_path, const char * fragment_file_path);
 		~Shader();
 
+		GLuint getUniformLocation(const GLchar * uniform_name);
+		GLuint getAttributeLocation(const char * attribute_name);
 		void setUniform1i(const GLchar* name, int value);
 		void setUniform1f(const GLchar* name, float value);
 		void setUniform2f(const GLchar* name, const glm::vec2 & vector);
@@ -33,10 +35,8 @@ namespace Valkyr { namespace Graphics {
 		void enable() const;
 		void disable() const;
 
-	protected:
 	private:
 		void loadShader(const char * vertex_file_path, const char * fragment_file_path);
-		GLint Shader::getUniformLocation(const GLchar* name);
 
 	};
 

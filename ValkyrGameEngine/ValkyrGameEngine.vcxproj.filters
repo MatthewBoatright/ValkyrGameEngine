@@ -57,13 +57,17 @@
     <ClCompile Include="Models\obj_model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Models\mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Shaders\SimpleFragmentShader.shd" />
-    <None Include="Shaders\TextureFragmentShader.shd" />
     <None Include="Shaders\TextureVertexShader.shd" />
     <None Include="Shaders\SimpleVertexShader.shd" />
+    <None Include="Shaders\OBJModel.fsh" />
+    <None Include="Shaders\TextureFragmentShader.fsh" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shaders\shader.h">
@@ -114,5 +118,14 @@
     <ClInclude Include="Models\obj_model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Models\mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Shaders\OBJModel.vsh" />
   </ItemGroup>
 </Project>

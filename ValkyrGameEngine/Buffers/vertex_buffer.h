@@ -6,15 +6,18 @@
 
 #include <glm/glm.hpp>
 
+#include "../Common/vertex.h"
+
 namespace Valkyr { namespace Graphics { 
 
 	class VertexBuffer
 	{
 	public:
 		VertexBuffer(GLfloat * data, GLsizei count, GLuint bufferSize);
-		VertexBuffer(const std::vector<glm::vec2> indexed_vertices);
-		VertexBuffer(const std::vector<glm::vec3> indexed_vertices);
-		VertexBuffer(const std::vector<glm::vec4> indexed_vertices);
+		VertexBuffer(const std::vector<glm::vec2> vertices);
+		VertexBuffer(const std::vector<glm::vec3> vertices);
+		VertexBuffer(const std::vector<glm::vec4> vertices);
+		VertexBuffer(const std::vector<Vertex> vertices);
 		~VertexBuffer();
 
 		void bind() const;

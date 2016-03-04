@@ -12,6 +12,7 @@ namespace Valkyr { namespace Graphics {
 	{
 	public:
 		IndexBuffer(GLuint * data, GLsizei count);
+		IndexBuffer(const std::vector<unsigned int> indices);
 		IndexBuffer(const std::vector<unsigned short> indices);
 		~IndexBuffer();
 

@@ -50,7 +50,6 @@ namespace Valkyr { namespace Graphics {
 			printf("Couldn't open fragment file: %s\n", fragment_file_path);
 		}
 
-
 		GLint Result = GL_FALSE;
 		int InfoLogLength;
 
@@ -110,9 +109,14 @@ namespace Valkyr { namespace Graphics {
 		glDeleteShader(FragmentShaderID);
 	}
 
-	GLint Shader::getUniformLocation(const GLchar* name)
+	GLuint Shader::getUniformLocation(const GLchar * uniform_name)
 	{
-		return glGetUniformLocation(m_ProgramID, name);
+		return glGetUniformLocation(m_ProgramID, uniform_name);
+	}
+
+	GLuint Shader::getAttributeLocation(const char * attribute_name)
+	{
+		return glGetAttribLocation(m_ProgramID, attribute_name);
 	}
 
 	void Shader::setUniform1i(const GLchar* name, int value)

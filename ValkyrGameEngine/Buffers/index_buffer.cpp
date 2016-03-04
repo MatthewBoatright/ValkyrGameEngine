@@ -11,6 +11,15 @@ namespace Valkyr { namespace Graphics {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	}
 	
+	IndexBuffer::IndexBuffer(const std::vector<unsigned int> indices)
+		: m_Size(indices.size())
+	{
+		glGenBuffers(1, &m_IndexBufferID);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferID);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Size * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+
 	IndexBuffer::IndexBuffer(const std::vector<unsigned short> indices)
 		: m_Size(indices.size())
 	{

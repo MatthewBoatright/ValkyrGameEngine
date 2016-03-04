@@ -1,12 +1,8 @@
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <string>
 
 #include <GL/glew.h>
-
-#include <GLFW/glfw3.h>
 
 #include <FreeImage.h>
 
@@ -19,16 +15,18 @@ namespace Valkyr { namespace Graphics {
 	class Texture
 	{
 	public:
-		Texture(const char * texturePath);
+		Texture(const char * texturePath, GLenum target = GL_TEXTURE_2D);
 
-		void bind();
+		bool load();
+		void bind(GLenum textureUnit);
 		void unbind();
 
 	private:
+		std::string m_TextureFile;
+		GLenum m_TextureTarget;
 		GLuint m_TextureID;
 
-		bool init(const char * texturePath);
-		bool loadDDS(const char * texturePath);
+		bool loadDDS();
 
 	};
 

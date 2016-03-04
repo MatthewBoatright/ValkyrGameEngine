@@ -2,17 +2,14 @@
 
 namespace Valkyr { namespace Graphics { 
 
-	Texture::Texture(const char * texturePath)
-	{
-		if (!init(texturePath))
-		{
-			// Load a default texture?
-		}
-	}
+	Texture::Texture(const char * texturePath, GLenum target)
+		: m_TextureFile(m_TextureFile), m_TextureTarget(target)
+	{}
 
-	void Texture::bind()
+	void Texture::bind(GLenum textureUnit)
 	{
-		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+		glActiveTexture(textureUnit);
+		glBindTexture(m_TextureTarget, m_TextureID);
 	}
 
 	void Texture::unbind()
@@ -20,23 +17,23 @@ namespace Valkyr { namespace Graphics {
 		glDisable(m_TextureID);
 	}
 
-	bool Texture::init(const char * texturePath)
+	bool Texture::load()
 	{
 		FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
 		FIBITMAP *dib(0);
 		BYTE* bits(0);
 		unsigned int width(0), height(0);
 
-		fif = FreeImage_GetFileType(texturePath, 0);
+		fif = FreeImage_GetFileType(m_TextureFile.c_str(), 0);
 		if (fif == FIF_UNKNOWN)
-			fif = FreeImage_GetFIFFromFilename(texturePath);
+			fif = FreeImage_GetFIFFromFilename(m_TextureFile.c_str());
 		if (fif == FIF_DDS)
-			return loadDDS(texturePath);
+			return loadDDS();
 		if (fif == FIF_UNKNOWN)
 			return false;
 
 		if (FreeImage_FIFSupportsReading(fif))
-			dib = FreeImage_Load(fif, texturePath);
+			dib = FreeImage_Load(fif, m_TextureFile.c_str());
 		if (!dib)
 			return false;
 
@@ -47,26 +44,25 @@ namespace Valkyr { namespace Graphics {
 			return false;
 
 		glGenTextures(1, &m_TextureID);
-		glBindTexture(GL_TEXTURE_2D, m_TextureID);
-		glEnable(GL_TEXTURE_2D);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, (void*)bits);
+		glBindTexture(m_TextureTarget, m_TextureID);
+		glTexImage2D(m_TextureTarget, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, (void*)bits);
+		glTexParameteri(m_TextureTarget, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(m_TextureTarget, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(m_TextureTarget, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(m_TextureTarget, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 		return true;
 	}
 
-	bool Texture::loadDDS(const char * texturePath)
+	bool Texture::loadDDS()
 	{
 		unsigned char header[124];
 		FILE *fp;
 
-		fp = fopen(texturePath, "rb");
+		fp = fopen(m_TextureFile.c_str(), "rb");
 		if (fp == NULL) 
 		{
-			printf("%s could not be opened.\n", texturePath);
+			printf("%s could not be opened.\n", m_TextureFile.c_str());
 			return false;
 		}
 
@@ -114,7 +110,7 @@ namespace Valkyr { namespace Graphics {
 
 		glGenTextures(1, &m_TextureID);
 
-		glBindTexture(GL_TEXTURE_2D, m_TextureID);
+		glBindTexture(m_TextureTarget, m_TextureID);
 		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
 		unsigned int blockSize = (format == GL_COMPRESSED_RGBA_S3TC_DXT1_EXT) ? 8 : 16;
@@ -123,7 +119,7 @@ namespace Valkyr { namespace Graphics {
 		for (unsigned int level = 0; level < mipMapCount && (width || height); ++level)
 		{
 			unsigned int size = ((width + 3) / 4)*((height + 3) / 4)*blockSize;
-			glCompressedTexImage2D(GL_TEXTURE_2D, level, format, width, height, 0, size, buffer + offset);
+			glCompressedTexImage2D(m_TextureTarget, level, format, width, height, 0, size, buffer + offset);
 
 			offset += size;
 			width /= 2;
