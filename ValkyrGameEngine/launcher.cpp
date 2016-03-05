@@ -35,15 +35,15 @@ int main(void)
 	ShellWindow mainWindow("Valkyr Engine", 1024, 768);
 
 	Mesh * mesh = new Mesh();
-	mesh->loadMesh("epidote.obj");
+	mesh->loadMesh("muro.mtl");
 
-	Shader shader("Shaders/SimpleVertexShader.shd", "Shaders/SimpleFragmentShader.shd");
+	Mesh * mesh2 = new Mesh();
+	mesh2->loadMesh("epidote.obj");
+
+	Shader shader("Shaders/basic.vsh", "Shaders/basic.fsh");
 	shader.enable();
 
-	GLuint MatrixID = glGetUniformLocation(shader.m_ProgramID, "MVP");
-	GLuint ViewMatrixID = glGetUniformLocation(shader.m_ProgramID, "V");
-	GLuint ModelMatrixID = glGetUniformLocation(shader.m_ProgramID, "M");
-	GLuint LightID = glGetUniformLocation(shader.m_ProgramID, "LightPosition_worldspace");
+	//Shader shader("Shaders/SimpleVertexShader.shd", "Shaders/SimpleFragmentShader.shd");
 
 	double transX = 0;
 	double transY = 0;
@@ -53,21 +53,24 @@ int main(void)
 
 		glm::mat4 ProjectionMatrix = getProjectionMatrix();
 		glm::mat4 ViewMatrix = getViewMatrix();
-		glm::mat4 TranslationMatrix = translate(mat4(), glm::vec3(transX += 0.1, 0, 0));
-		glm::mat4 ModelMatrix = TranslationMatrix;
+		//glm::mat4 TranslationMatrix = translate(mat4(), glm::vec3(transX += 0.1, 0, 0));
+		glm::mat4 ModelMatrix = glm::mat4(1.0);
 		glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
-		glm::vec3 lightPos = glm::vec3(4, 4, 4);
-		glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
+		shader.setUniform3f("LightPosition_WorldSpace", glm::vec3(4, 4, 4));
+		shader.setUniformMat4("MVP", MVP);
+		shader.setUniformMat4("V", ModelMatrix);
+		shader.setUniformMat4("M", ViewMatrix);
 
-		ModelMatrix = glm::toMat4(glm::normalize(glm::quat(glm::vec3(0, transY += 0.1, 0))));
-		MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+		//ModelMatrix = glm::toMat4(glm::normalize(glm::quat(glm::vec3(0, transY += 0.1, 0))));
+		//MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-		glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
-		glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
-		
+		//glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+		//glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
+		//glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+
 		mesh->render();
+		mesh2->render();
 
 		mainWindow.update();
 		mainWindow.calculateFPS();

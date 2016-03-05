@@ -41,7 +41,8 @@ namespace Valkyr {
 
 				const unsigned int MaterialIndex = m_Entries[i].MaterialIndex;
 
-				if (MaterialIndex < m_Textures.size() && m_Textures[MaterialIndex]) {
+				if (MaterialIndex < m_Textures.size() && m_Textures[MaterialIndex]) 
+				{
 					m_Textures[MaterialIndex]->bind(GL_TEXTURE0);
 				}
 
@@ -52,7 +53,7 @@ namespace Valkyr {
 		bool Mesh::initFromAIScene(const aiScene * scene, const std::string & filePath)
 		{
 			m_Entries.resize(scene->mNumMeshes);
-			m_Textures.resize(scene->mNumTextures);
+			m_Textures.resize(scene->mNumMaterials);
 
 			for (int i = 0; i < m_Entries.size(); i++)
 			{
@@ -60,7 +61,7 @@ namespace Valkyr {
 				initMesh(i, mesh);
 			}
 
-			return true; //initMaterials(scene, filePath);
+			return initMaterials(scene, filePath);
 		}
 
 		void Mesh::initMesh(unsigned int index, const aiMesh * mesh)
@@ -114,7 +115,7 @@ namespace Valkyr {
 			{
 				const aiMaterial * material = scene->mMaterials[i];
 
-				//m_Textures[i] = NULL;
+				m_Textures[i] = NULL;
 
 				if (material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
 				{

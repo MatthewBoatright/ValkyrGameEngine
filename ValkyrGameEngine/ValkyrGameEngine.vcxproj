@@ -139,8 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Shaders\OBJModel.fsh" />
+    <None Include="Shaders\basic.fsh" />
     <None Include="Shaders\SimpleFragmentShader.shd" />
+    <None Include="Shaders\SimpleFragmentShader2.shd" />
     <None Include="Shaders\SimpleVertexShader.shd" />
     <None Include="Shaders\TextureFragmentShader.fsh" />
     <None Include="Shaders\TextureVertexShader.shd" />
@@ -166,7 +167,7 @@
     <ClInclude Include="Common\window.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Shaders\OBJModel.vsh">
+    <Text Include="Shaders\basic.vsh">
       <FileType>Document</FileType>
     </Text>
   </ItemGroup>

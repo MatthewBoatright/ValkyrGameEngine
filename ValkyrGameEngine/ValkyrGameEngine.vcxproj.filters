@@ -63,11 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Shaders\SimpleFragmentShader.shd" />
     <None Include="Shaders\TextureVertexShader.shd" />
     <None Include="Shaders\SimpleVertexShader.shd" />
-    <None Include="Shaders\OBJModel.fsh" />
     <None Include="Shaders\TextureFragmentShader.fsh" />
+    <None Include="Shaders\SimpleFragmentShader2.shd" />
+    <None Include="Shaders\SimpleFragmentShader.shd" />
+    <None Include="Shaders\basic.fsh" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shaders\shader.h">
@@ -126,6 +127,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Shaders\OBJModel.vsh" />
+    <Text Include="Shaders\basic.vsh" />
   </ItemGroup>
 </Project>

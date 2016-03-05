@@ -3,7 +3,7 @@
 namespace Valkyr { namespace Graphics { 
 
 	Texture::Texture(const char * texturePath, GLenum target)
-		: m_TextureFile(m_TextureFile), m_TextureTarget(target)
+		: m_TextureFile(texturePath), m_TextureTarget(target)
 	{}
 
 	void Texture::bind(GLenum textureUnit)
